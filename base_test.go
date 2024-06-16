@@ -47,7 +47,7 @@ func BenchmarkUint32_StdlibReader(b *testing.B) {
 	b.ResetTimer()
 	var total uint32
 	var err error
-	for n := 0; n < b.N; n++ {
+	for range b.N {
 		total, err = readUint32StdlibReader(bb)
 		if err != nil {
 			b.Fatalf("error: %v", err)
