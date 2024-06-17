@@ -47,7 +47,7 @@ func BenchmarkUint32_StdlibReader(b *testing.B) {
 	b.ResetTimer()
 	var total uint32
 	var err error
-	for n := 0; n < b.N; n++ {
+	for range b.N {
 		total, err = readUint32StdlibReader(bb)
 		if err != nil {
 			b.Fatalf("error: %v", err)
@@ -67,7 +67,7 @@ func BenchmarkUint32_StdlibReflect(b *testing.B) {
 	b.ResetTimer()
 	var total uint32
 	var err error
-	for n := 0; n < b.N; n++ {
+	for range b.N {
 		total, err = readUint32StdlibReflect(bb)
 		if err != nil {
 			b.Fatalf("error: %v", err)
@@ -87,7 +87,7 @@ func BenchmarkUint32_SliceDirect(b *testing.B) {
 	buf := uint32Fill(b.N)
 	b.ResetTimer()
 	var total uint32
-	for n := 0; n < b.N; n++ {
+	for range b.N {
 		buf, total = readUint32FromSlice(buf)
 	}
 	junku32 = total
@@ -102,7 +102,7 @@ func BenchmarkUint32_BufferNext(b *testing.B) {
 	bb := bytes.NewBuffer(uint32Fill(b.N))
 	b.ResetTimer()
 	var total uint32
-	for n := 0; n < b.N; n++ {
+	for range b.N {
 		total = readUint32BufferNext(bb)
 	}
 	junku32 = total
@@ -122,7 +122,7 @@ func BenchmarkUint32_BufferNextChecked(b *testing.B) {
 	b.ResetTimer()
 	var total uint32
 	var err error
-	for n := 0; n < b.N; n++ {
+	for range b.N {
 		total, err = readUint32BufferNextChecked(bb)
 		if err != nil {
 			b.Fatalf("error: %v", err)
@@ -144,7 +144,7 @@ func BenchmarkUint32_BufferReadFull(b *testing.B) {
 	b.ResetTimer()
 	var total uint32
 	var err error
-	for n := 0; n < b.N; n++ {
+	for range b.N {
 		total, err = readUint32BufferReadFull(bb)
 		if err != nil {
 			b.Fatalf("error: %v", err)
@@ -166,7 +166,7 @@ func BenchmarkUint32_BufferRead(b *testing.B) {
 	b.ResetTimer()
 	var total uint32
 	var err error
-	for n := 0; n < b.N; n++ {
+	for range b.N {
 		total, err = readUint32BufferRead(bb)
 		if err != nil {
 			b.Fatalf("error: %v", err)
@@ -196,7 +196,7 @@ func BenchmarkUint32_CustomReader(b *testing.B) {
 	b.ResetTimer()
 	var total uint32
 	var err error
-	for n := 0; n < b.N; n++ {
+	for range b.N {
 		total, err = rd.ReadUint32()
 		if err != nil {
 			b.Fatalf("error: %v", err)
@@ -230,7 +230,7 @@ func BenchmarkUint32_DynReadBuffer(b *testing.B) {
 	b.ResetTimer()
 	var total uint32
 	var err error
-	for n := 0; n < b.N; n++ {
+	for range b.N {
 		total, err = readUint32BDynReadNext(bb)
 		if err != nil {
 			b.Fatalf("error: %v", err)
@@ -245,7 +245,7 @@ func BenchmarkUint32_DynReadReader(b *testing.B) {
 	b.ResetTimer()
 	var total uint32
 	var err error
-	for n := 0; n < b.N; n++ {
+	for range b.N {
 		total, err = readUint32BDynReadNext(bb)
 		if err != nil {
 			b.Fatalf("error: %v", err)
@@ -269,7 +269,7 @@ func BenchmarkByte_ReadFull(b *testing.B) {
 	b.ResetTimer()
 	var total byte
 	var err error
-	for n := 0; n < b.N; n++ {
+	for range b.N {
 		total, err = readByteReadFull(rd)
 		if err != nil {
 			b.Fatalf("error: %v", err)
@@ -288,7 +288,7 @@ func BenchmarkByte_ByteReader(b *testing.B) {
 	b.ResetTimer()
 	var total byte
 	var err error
-	for n := 0; n < b.N; n++ {
+	for range b.N {
 		total, err = readByteByteReader(rd)
 		if err != nil {
 			b.Fatalf("error: %v", err)
@@ -310,7 +310,7 @@ func BenchmarkByte_DynByteReader(b *testing.B) {
 	b.ResetTimer()
 	var total byte
 	var err error
-	for n := 0; n < b.N; n++ {
+	for range b.N {
 		total, err = readByteDyn(rd)
 		if err != nil {
 			b.Fatalf("error: %v", err)
@@ -330,7 +330,7 @@ func BenchmarkBytes_ReaderReadFull(b *testing.B) {
 	b.ResetTimer()
 	retain := make([]byte, 8)
 	var err error
-	for n := 0; n < b.N; n++ {
+	for range b.N {
 		retain, err = readBytesReaderReadFull(rd, retain)
 		if err != nil {
 			b.Fatalf("error: %v", err)
@@ -350,7 +350,7 @@ func BenchmarkBytes_ReaderCopyN(b *testing.B) {
 	b.ResetTimer()
 	var retain bytes.Buffer
 	var err error
-	for n := 0; n < b.N; n++ {
+	for range b.N {
 		err = readBytesReaderCopyN(rd, &retain, 8)
 		if err != nil {
 			b.Fatalf("error: %v", err)
@@ -371,7 +371,7 @@ func BenchmarkBytes_ReaderCopyBuffer(b *testing.B) {
 	var retain bytes.Buffer
 	var err error
 	tmp := make([]byte, 512)
-	for n := 0; n < b.N; n++ {
+	for range b.N {
 		err = readBytesReaderCopyBuffer(rd, &retain, 8, tmp)
 		if err != nil {
 			b.Fatalf("error: %v", err)
@@ -392,7 +392,7 @@ func BenchmarkBytes_BufferCopyN(b *testing.B) {
 	b.ResetTimer()
 	var retain bytes.Buffer
 	var err error
-	for n := 0; n < b.N; n++ {
+	for range b.N {
 		err = readBytesBufferCopyN(rd, &retain, 8)
 		if err != nil {
 			b.Fatalf("error: %v", err)
@@ -426,7 +426,7 @@ func BenchmarkBytes_BufferDynCopy(b *testing.B) {
 	wb := bytes.NewBuffer(make([]byte, 0, 8))
 	b.ResetTimer()
 	var err error
-	for n := 0; n < b.N; n++ {
+	for range b.N {
 		err = readBytesBufferDynCopy(rd, wb, 8)
 		if err != nil {
 			b.Fatalf("error: %v", err)
@@ -443,7 +443,7 @@ func benchmarkString_ReadStringify(size int, b *testing.B) {
 	var err error
 	var s string
 	buf := make([]byte, size)
-	for n := 0; n < b.N; n++ {
+	for range b.N {
 		_, err = io.ReadFull(rd, buf)
 		if err != nil {
 			b.Fatalf("error: %v", err)
@@ -464,7 +464,7 @@ func benchmarkString_CopyBufferBuilder(size int, b *testing.B) {
 	b.ReportAllocs()
 	bf := byteFill(size)
 	buffers := make([]*bytes.Buffer, b.N)
-	for n := 0; n < b.N; n++ {
+	for n := range b.N {
 		buf := append([]byte(nil), bf...)
 		buffers[n] = bytes.NewBuffer(buf)
 	}
@@ -473,7 +473,7 @@ func benchmarkString_CopyBufferBuilder(size int, b *testing.B) {
 	var err error
 	var s string
 	buf := make([]byte, 4096)
-	for n := 0; n < b.N; n++ {
+	for n := range b.N {
 		var sb strings.Builder
 		_, err = io.CopyBuffer(&sb, buffers[n], buf)
 		if err != nil {
@@ -498,7 +498,7 @@ func benchmarkString_CopyReuseBuilder(size int, b *testing.B) {
 
 	bf := byteFill(size)
 	buffers := make([]*bytes.Buffer, b.N)
-	for n := 0; n < b.N; n++ {
+	for n := range b.N {
 		buf := append([]byte(nil), bf...)
 		buffers[n] = bytes.NewBuffer(buf)
 	}
@@ -508,7 +508,7 @@ func benchmarkString_CopyReuseBuilder(size int, b *testing.B) {
 	var err error
 	var s string
 	var sb strings.Builder
-	for n := 0; n < b.N; n++ {
+	for n := range b.N {
 		sb.Reset()
 		_, err = io.Copy(&sb, buffers[n])
 		if err != nil {
